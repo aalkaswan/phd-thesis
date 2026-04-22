@@ -32,12 +32,11 @@ jobs:
           texlive-xetex \
           texlive-lang-european \
           texlive-science \
-          texlive-math-extra \
           latexmk \
           dvipng \
           graphviz \
           librsvg2-bin \
-          ghostscript
+          ghostscript || true
 
     - name: Build thesis
       run: |
