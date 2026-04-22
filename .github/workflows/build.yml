@@ -19,10 +19,9 @@ jobs:
       with:
         path: /var/cache/apt
         key: ${{ runner.os }}-apt-${{ hashFiles('**/Makefile') }}
-        restore-keys: |
-          ${{ runner.os }}-apt-
 
     - name: Install LaTeX and dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
       run: |
         sudo apt-get update
         sudo apt-get install -y \
