@@ -22,7 +22,7 @@ jobs:
           texlive-fonts-extra \
           texlive-latex-extra \
           texlive-xetex \
-          texlive-lang-dutch \
+          texlive-lang-european \
           latexmk \
           librsvg2-bin \
           ghostscript
