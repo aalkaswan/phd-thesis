@@ -18,11 +18,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          texlive-fonts-recommended \
-          texlive-fonts-extra \
-          texlive-latex-extra \
-          texlive-xetex \
-          texlive-lang-european \
+          texlive-full \
           latexmk \
           librsvg2-bin \
           ghostscript
