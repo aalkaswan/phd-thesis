@@ -1,0 +1,44 @@
+name: Build PhD Thesis
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install LaTeX and dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          texlive-fonts-recommended \
+          texlive-latex-extra \
+          texlive-xetex \
+          latexmk \
+          fonts-inconsolata \
+          fonts-libertinus \
+          librsvg2-bin \
+          ghostscript
+
+    - name: Build thesis
+      run: |
+        cd /home/runner/work/phd-thesis/phd-thesis
+        make all
+
+    - name: Upload PDFs
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: thesis-pdfs
+        path: |
+          dissertation.pdf
+          propositions.pdf
+          dissertation_print.pdf
+        retention-days: 30
