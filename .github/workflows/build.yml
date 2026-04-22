@@ -14,21 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Cache APT dependencies
-      uses: actions/cache@v4
+    - name: Cache and install LaTeX dependencies
+      uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        path: /var/cache/apt
-        key: ${{ runner.os }}-apt-${{ hashFiles('**/Makefile') }}
-
-    - name: Install LaTeX and dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          texlive-full \
-          latexmk \
-          librsvg2-bin \
-          ghostscript
+        packages: texlive-full latexmk librsvg2-bin ghostscript
+        version: 1.0
 
     - name: Build thesis
       run: |
