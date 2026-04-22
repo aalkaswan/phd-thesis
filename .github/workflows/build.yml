@@ -10,33 +10,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Cache APT dependencies
-      uses: actions/cache@v4
+    - name: Cache and install LaTeX dependencies
+      uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        path: /var/cache/apt
-        key: ${{ runner.os }}-apt-${{ hashFiles('**/Makefile') }}
-
-    - name: Install LaTeX and dependencies
-      if: steps.cache-apt.outputs.cache-hit != 'true'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          texlive-fonts-recommended \
-          texlive-fonts-extra \
-          texlive-latex-extra \
-          texlive-latex-recommended \
-          texlive-xetex \
-          texlive-lang-european \
-          texlive-science \
-          latexmk \
-          dvipng \
-          graphviz \
-          librsvg2-bin \
-          ghostscript || true
+        packages: texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-latex-recommended texlive-xetex texlive-lang-european texlive-science latexmk dvipng graphviz librsvg2-bin ghostscript
+        version: 1.0
 
     - name: Build thesis
       run: |
