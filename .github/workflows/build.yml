@@ -36,13 +36,13 @@ jobs:
         cd /home/runner/work/phd-thesis/phd-thesis
         make all
 
-    - name: Upload PDFs
-      uses: actions/upload-artifact@v4
-      if: always()
+    - name: Upload PDFs to Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        name: thesis-pdfs
-        path: |
+        files: |
           dissertation.pdf
           propositions.pdf
           dissertation_print.pdf
-        retention-days: 30
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
